@@ -34,11 +34,6 @@ def page(browser: Browser):
 
 
 @pytest.fixture(scope="function")
-def home_page(page: Page, base_url=base_url):
-    page.goto(base_url)
-
-
-@pytest.fixture(scope="function")
 def user_credentials():
     return {
         "email": os.getenv("USER_EMAIL"),

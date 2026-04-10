@@ -7,7 +7,6 @@ class HomePage:
     def __init__(self, page: Page, url):
         self.page = page
         self.url = url
-        self.open_main_page()
 
     def open_main_page(self):
         self.page.goto(self.url)
