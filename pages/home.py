@@ -13,10 +13,16 @@ class HomePage:
         try:
             self.cookies_accept()
         except PlaywrightTimeoutError:
-            self.page.locator(".fc-consent-root").first.evaluate("el => el.remove()")
+            self._remove_overlay()
+
+    def _remove_overlay(self):
+        self.page.locator(".fc-consent-root").first.evaluate("el => el.remove()")
 
     def cookies_accept(self):
-        self.page.get_by_role(**HomeLocators.ACCEPT_COOKIE).click(timeout=2)
+        try:
+            self.page.get_by_role(**HomeLocators.ACCEPT_COOKIE).click()
+        except PlaywrightTimeoutError:
+            pass
 
-    def logged_in_as(self):
+    def logged_in_as_label(self):
         return self.page.get_by_text("Logged in as")

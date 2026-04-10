@@ -17,3 +17,9 @@ class Auth:
 
     def login_click_the_button(self):
         self.page.get_by_role(**AuthLocators.Login.LOGIN_BUTTON).click()
+
+    def user_login(self, credentials):
+        auth = Auth(self.page)
+        auth.login_fill_in_email(credentials['email'])
+        auth.login_fill_in_password(credentials['password'])
+        auth.login_click_the_button()
