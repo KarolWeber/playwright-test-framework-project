@@ -1,6 +1,4 @@
 from playwright.sync_api import Page
-from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
-from locators.home import HomeLocators
 
 
 class HomePage:
@@ -10,19 +8,17 @@ class HomePage:
 
     def open_main_page(self):
         self.page.goto(self.url)
-        try:
-            self.cookies_accept()
-        except PlaywrightTimeoutError:
-            self._remove_overlay()
+        self._cookies_accept_of_remove()
 
-    def _remove_overlay(self):
-        self.page.locator(".fc-consent-root").first.evaluate("el => el.remove()")
+    def _cookies_accept_of_remove(self):
+        accept_button = self.page.get_by_role('button', name="Zgadzam się")
 
-    def cookies_accept(self):
-        try:
-            self.page.get_by_role(**HomeLocators.ACCEPT_COOKIE).click()
-        except PlaywrightTimeoutError:
-            pass
+        if accept_button.is_visible(timeout=2000):
+            accept_button.click()
+        else:
+            consent = self.page.locator('.fc-consent-root')
+            if consent.count() > 0:
+                consent.first.evaluate('el => el.remove()')
 
     def logged_in_as_label(self):
-        return self.page.get_by_text("Logged in as")
+        return self.page.get_by_text('Logged in as')
