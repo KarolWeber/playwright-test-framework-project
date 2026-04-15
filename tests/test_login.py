@@ -13,5 +13,21 @@ def test_user_can_login_with_valid_credentials(page, base_url, user_credentials)
     home_page.open_main_page()
     nav_bar.go_to_auth()
     auth.login(user_credentials)
-    logged_in_as = home_page.logged_in_as_label()
-    expect(logged_in_as).to_contain_text(user_credentials['name'])
+
+    expect(home_page.logged_in_as_label()).to_contain_text(user_credentials['name'])
+
+
+def test_user_login_with_invalid_password(page, base_url, user_credentials):
+    expected_login_message = 'Your email or password is incorrect!'
+    home_page = HomePage(page, base_url)
+    nav_bar = NavBarUpper(page)
+    auth = Auth(page)
+
+    home_page.open_main_page()
+    nav_bar.go_to_auth()
+    auth.login(
+        {'email': user_credentials['email'],
+         'password': 'invalid_password'}
+    )
+
+    expect(auth.login_error_message()).to_contain_text(expected_login_message)

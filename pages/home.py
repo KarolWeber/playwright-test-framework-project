@@ -11,7 +11,7 @@ class HomePage:
         self._cookies_accept_of_remove()
 
     def _cookies_accept_of_remove(self):
-        accept_button = self.page.get_by_role('button', name="Zgadzam się")
+        accept_button = self.page.get_by_role('button', name='Zgadzam się')
 
         if accept_button.is_visible(timeout=2000):
             accept_button.click()
