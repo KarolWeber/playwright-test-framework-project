@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, TimeoutError as PlaywrightTimeoutError
 
 
 class HomePage:
@@ -8,16 +8,16 @@ class HomePage:
 
     def open(self):
         self.page.goto(self.url)
-        self._cookies_accept_of_remove()
 
-    def _cookies_accept_of_remove(self):
-        accept_button = self.page.get_by_role('button', name='Zgadzam się')
-        if accept_button.is_visible(timeout=5000):
-            accept_button.click()
-        else:
-            consent = self.page.locator('.fc-consent-root')
-            if consent.count() > 0:
-                consent.first.evaluate('el => el.remove()')
+    def accept_cookies(self):
+        try:
+            self.page.locator("button.fc-cta-consent").click(timeout=3000)
+        except PlaywrightTimeoutError:
+            pass
+
+    def open_ready(self):
+        self.open()
+        self.accept_cookies()
 
     def logged_in_as_label(self):
         return self.page.get_by_text('Logged in as')

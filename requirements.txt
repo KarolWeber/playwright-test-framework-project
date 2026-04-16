@@ -2,6 +2,6 @@ flake8==7.3.0
 playwright==1.58.0
 pytest==9.0.3
 python-dotenv==1.2.2
-
-faker
-allure-python-commons
+Faker==40.13.0
+allure-pytest==2.15.3
+allure-python-commons==2.15.3

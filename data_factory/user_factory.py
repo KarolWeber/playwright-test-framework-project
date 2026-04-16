@@ -6,7 +6,7 @@ faker = Faker()
 
 
 def create_user():
-    birth_date = faker.date_of_birth()
+    birth_date = faker.date_of_birth(minimum_age=5, maximum_age=126)
     gender = random.choice(['Mr', 'Mrs'])
     first_name = faker.first_name_male() if gender == 'Mr' else faker.first_name_female()
     last_name = faker.last_name()
