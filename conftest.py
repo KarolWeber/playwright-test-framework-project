@@ -2,7 +2,10 @@ import os
 
 import pytest
 from dotenv import load_dotenv
-from playwright.sync_api import sync_playwright, Browser
+from playwright.sync_api import sync_playwright, Browser, Page
+
+from core.app import App
+from data_factory.user_factory import create_user
 
 load_dotenv()
 
@@ -24,7 +27,7 @@ def browser():
     pw.stop()
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def page(browser: Browser):
     context = browser.new_context()
     page = context.new_page()
@@ -33,10 +36,20 @@ def page(browser: Browser):
     context.close()
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
+def app(page: Page, base_url: str):
+    return App(page, base_url)
+
+
+@pytest.fixture()
 def user_credentials():
     return {
         "email": os.getenv("USER_EMAIL"),
         "password": os.getenv("USER_PASSWORD"),
         "name": os.getenv("USER_NAME")
     }
+
+
+@pytest.fixture()
+def user_data():
+    return create_user()
