@@ -1,5 +1,4 @@
 import allure
-import pytest
 from playwright.sync_api import expect
 
 
@@ -15,7 +14,6 @@ def test_user_can_login_and_logout(app, user_credentials):
     expect(app.page).to_have_url(f'{app.base_url}/login')
 
 
-@pytest.mark.test
 @allure.suite("User login")
 @allure.title("User login with incorrect credentials")
 def test_user_login_with_invalid_password(app, user_credentials):
