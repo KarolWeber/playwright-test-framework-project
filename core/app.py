@@ -1,5 +1,5 @@
-from core.flows import Flows
-from core.pages import Pages
+from core.orchestrator import Flows
+from core.page_container import Pages
 
 
 class App:

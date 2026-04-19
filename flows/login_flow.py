@@ -1,6 +1,6 @@
 import allure
 
-from core.pages import Pages
+from core.page_container import Pages
 
 
 class LoginFlow:
